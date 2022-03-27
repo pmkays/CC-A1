@@ -3,8 +3,20 @@ const app = express()
 const port = 3005
 
 const AWS = require('aws-sdk');
+AWS.config.update({region: 'us-east-1'});
 
-AWS.config.loadFromPath('./config.json');
+
+getConfig = async () => {
+  const download = require('download');
+  await download('https://cc-configurations.s3.amazonaws.com/config.json','./')
+  .then(() => {
+    AWS.config.loadFromPath('./config.json');
+    console.log('Got the most recent config.json');
+    console.log(AWS.config.credentials);
+  })
+}
+
+getConfig();
 
 const client = new AWS.DynamoDB.DocumentClient();
 app.use(express.json());
@@ -129,5 +141,4 @@ app.post('/deliveries', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
-  console.log(AWS.config.credentials)
 })
