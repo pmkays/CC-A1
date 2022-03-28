@@ -3,6 +3,10 @@ const express = require('express')
 const app = express()
 const port = 3004
 
+const util = require('util');
+const { query } = require('express');
+
+
 app.use(express.json());
 
 const axios = require('axios').default;
@@ -257,7 +261,7 @@ app.post('/orders/', (req, res) => {
   values (
     ${req.body.total}, 
     '${req.body.orderdate}', 
-    '${req.body.orderstatus}',
+    'Pending',
     ${req.body.buyerid}, 
     ${req.body.itemid}
   )`
@@ -291,6 +295,80 @@ app.post('/orders/', (req, res) => {
   })
 })
 
+
+updateDeliveryStatus = async (orderid) => {
+  var url = 'http://ec2-54-205-217-94.compute-1.amazonaws.com:3005/deliveries/status';
+  var dynamodelivery = {
+    "PK": orderid.toString(),
+    "SK" : orderid.toString(),
+  };
+
+  await axios.patch(url,dynamodelivery).then((response) =>{
+    console.log(`Delivery with order id ${orderid} updated`);
+    console.log(response.data);
+
+  }).catch((err) => {
+    console.log("Axios error");
+    console.log(err.stack);
+  })
+}
+
+getDynamoParams= (orderid) => {
+  var params = {
+    "PK": orderid.toString(),
+    "SK" : orderid.toString(),
+  };
+  return params;
+}
+
+formatReturnData = (data, orderDelivered, orderid) => {
+  var orderstatus = orderDelivered ? "Fulfilled" : "Pending";
+  var formatted = {
+    ... data,
+    orderid,
+    orderstatus
+  }
+  return formatted;
+}
+
+app.get('/timedfunction', async (req, res) => {
+  var url = 'http://ec2-54-205-217-94.compute-1.amazonaws.com:3005/deliveries/status';
+  var getPendingOrders = `Select * from orders where orderstatus = 'Pending'`;
+
+  try{
+    const query = util.promisify(conn.query).bind(conn);
+    const orders = await query(getPendingOrders);
+    console.log(orders);
+    var deliveriesUpdated = [];
+
+    for(var i =0; i < orders.length; i++){
+      var params = getDynamoParams(orders[i].orderid);
+      var updateOrderStatus= `Update orders set orderstatus ='Fulfilled' where orderid = ${orders[i].orderid} `
+
+      try{
+        const deliveryUpdated = await axios.patch(url,params);
+        // console.log("AFTER AXIOS")
+        var orderDelivered = false;
+        if(deliveryUpdated.data.Attributes.status === "Delivered"){
+          await query(updateOrderStatus);
+          orderDelivered = true;
+          // console.log("Order status updated");
+        }
+        var formatted = formatReturnData(deliveryUpdated.data.Attributes, orderDelivered, orders[i].orderid);
+        deliveriesUpdated.push(formatted);
+      } catch (error){
+        // console.log(error);
+        res.status(500).send(error)
+      }
+    }
+    // console.log("ALL DELVIERIES UPDATED")
+    // console.log(deliveriesUpdated)
+    res.send(deliveriesUpdated);
+
+  } catch(error){
+    res.status(500).send(error)
+  }
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
