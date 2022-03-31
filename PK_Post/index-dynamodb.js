@@ -6,17 +6,17 @@ const AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
 
 
-getConfig = async () => {
-  const download = require('download');
-  await download('https://cc-configurations.s3.amazonaws.com/config.json','./')
-  .then(() => {
-    AWS.config.loadFromPath('./config.json');
-    console.log('Got the most recent config.json');
-    console.log(AWS.config.credentials);
-  })
-}
+// getConfig = async () => {
+//   const download = require('download');
+//   await download('https://cc-configurations.s3.amazonaws.com/config.json','./')
+//   .then(() => {
+//     AWS.config.loadFromPath('./config.json');
+//     console.log('Got the most recent config.json');
+//     console.log(AWS.config.credentials);
+//   })
+// }
 
-getConfig();
+// getConfig();
 
 const client = new AWS.DynamoDB.DocumentClient();
 app.use(express.json());
