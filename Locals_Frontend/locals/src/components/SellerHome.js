@@ -1,3 +1,6 @@
+import AuthContext from '../context/AuthContext'
+
+
 
 const axios = require('axios').default;
 
@@ -14,7 +17,7 @@ const mockSignIn = (email, password) => {
 }
 
 
-const Login  = (props) => {
+const SellerHome  = (props) => {
 
   const submitHandler = async (e) => {
     e.preventDefault(); 
@@ -39,22 +42,17 @@ const Login  = (props) => {
   }
 
   return(
-    <div>
-      <form onSubmit={submitHandler}>
+    <AuthContext.Consumer>{
+      user => (
         <div>
-          <label>Email</label><br/>
-          <input name='email' type='text'/>
+          <h1>{user.email}</h1>
+          <h1>{user.password}</h1>
         </div>
-        <div>
-          <label>Password</label><br/>
-          <input name ='password' type='password'/>
-        </div>
-        <div>
-          <button name='submit' type='submit'>Sign in</button>
-        </div>
-      </form>
-    </div>
+
+      )
+    }
+    </AuthContext.Consumer>
   );
 
 }
-export default Login;
+export default SellerHome;
