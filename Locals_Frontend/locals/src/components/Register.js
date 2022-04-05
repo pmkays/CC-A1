@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import {useNavigate, Link} from 'react-router-dom';
-import Message from './Message'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
 
 const axios = require('axios').default;
 
@@ -46,39 +48,45 @@ const Register  = (props) => {
 
   return(
     <div>
-      <h1>Get started with Locals today!</h1>
-      <form onSubmit={submitHandler}>
-        <div>
-          <label>Full Name</label><br/>
-          <input name='name' type='text'/>
-        </div>
-        <div>
-          <label>Email</label><br/>
-          <input name='email' type='text'/>
-        </div>
-        <div>
-          <label>Address</label><br/>
-          <input name='address' type='text'/>
-        </div>
-        <div>
-          <label>Account type</label><br/>
-          <select name="accounttype">
-            <option>Buyer</option>
-            <option>Seller</option>
-          </select>
-        </div>
-        <div>
-          <label>Credits</label><br/>
-          <input name='credits' type='number'/>
-        </div>
-        <div>
-          <label>Password</label><br/>
-          <input name ='password' type='password'/>
-        </div>
-        <div>
-          <button name='submit' type='submit'>Register</button>
-        </div>
-      </form>
+      <Container style={{width:'45%'}}>
+        <h1 className="pt-5 text-center" >Get started with Locals today!</h1>
+        <Form onSubmit={submitHandler}>
+          <Form.Group className="m-3 px-5 pt-5" controlId="formBasicName">
+            <Form.Label>Full name</Form.Label>
+            <Form.Control type="text" placeholder="Enter full name" name="name"/>
+          </Form.Group>
+          <Form.Group className="m-3 px-5" controlId="formBasicEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" name="email"/>
+          </Form.Group>
+          <Form.Group className="m-3 px-5" controlId="formBasicAddress">
+            <Form.Label>Address</Form.Label>
+            <Form.Control type="text" placeholder="Enter address" name="address"/>
+          </Form.Group>
+          <Form.Group className="m-3 px-5" controlId="formBasicAccountType">
+            <Form.Label>Account type</Form.Label>
+            <Form.Select aria-label="account type" name="accounttype">
+              <option value="seller">Seller</option>
+              <option value="buyer">Buyer</option>
+            </Form.Select>
+          </Form.Group>
+          <Form.Group className="m-3 px-5" controlId="formBasicCredits">
+            <Form.Label>Credits</Form.Label>
+            <Form.Control type="number" placeholder="Enter credits" name="credits" />
+          </Form.Group>
+          <Form.Group className="m-3 px-5" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" placeholder="Enter password" name="password" />
+          </Form.Group>
+          <Container>
+            <div className="text-center">
+              <Button className="m-1 px-3" variant="primary" type="submit">
+                Register
+              </Button>
+            </div>
+          </Container>
+        </Form>
+      </Container>
     </div>
   );
 

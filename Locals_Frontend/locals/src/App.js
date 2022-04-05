@@ -8,6 +8,8 @@ import {useNavigate} from 'react-router-dom';
 import Register from './components/Register'
 import Message from './components/Message'
 import SellerHome from './components/SellerHome'
+import LandingPage from './components/LandingPage'
+import NavBar from './components/NavBar'
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
@@ -26,7 +28,7 @@ function App() {
     // console.log(user)
   }
 
-  const handleLogout = (user) => {
+  const handleLogout = () => {
     setUser(null)
     setLoggedIn(false);
     navigate("/");
@@ -44,15 +46,20 @@ function App() {
   // }
 
   return(
-    <AuthContext.Provider value={user}>
-      <Routes>
-        <Route path="login" element={<Login onLogin={handleLogin} />} />
-        <Route path="register" element={<Register />} />
-        <Route path="home" element={<SellerHome />} />
-        <Route path="result" element={<Message />} />
-      </Routes>
-      {/* {isLoggedIn && user != null? <button onClick={handleLogout}>Log Out</button>:<Login onLogin={handleLogin} />} */}
+    <div>
+      <AuthContext.Provider value={user}>
+        <NavBar onlogout={handleLogout}/>
+        <Routes>
+          <Route path="/" element={<LandingPage/>}/>
+          <Route path="login" element={<Login onLogin={handleLogin} />} />
+          <Route path="register" element={<Register />} />
+          <Route path="home" element={<SellerHome />} />
+          <Route path="result" element={<Message />} />
+        </Routes>
     </AuthContext.Provider>
+
+    </div>
+
   );
 
   // return (

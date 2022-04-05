@@ -1,3 +1,6 @@
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
 
 const axios = require('axios').default;
 
@@ -17,6 +20,7 @@ const mockSignIn = (email, password) => {
 const Login  = (props) => {
 
   const submitHandler = async (e) => {
+    console.log(e);
     e.preventDefault(); 
     let form = e.target;
     console.log(form.email.value);
@@ -39,21 +43,26 @@ const Login  = (props) => {
   }
 
   return(
-    <div>
-      <form onSubmit={submitHandler}>
-        <div>
-          <label>Email</label><br/>
-          <input name='email' type='text'/>
-        </div>
-        <div>
-          <label>Password</label><br/>
-          <input name ='password' type='password'/>
-        </div>
-        <div>
-          <button name='submit' type='submit'>Sign in</button>
-        </div>
-      </form>
-    </div>
+    <Container style={{width:'45%'}}>
+      <Form onSubmit={submitHandler}>
+        <Form.Group className="m-3 px-5 pt-5" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control type="email" placeholder="Enter email" name="email"/>
+        </Form.Group>
+
+        <Form.Group className="m-3 px-5" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control type="password" placeholder="Password" name="password" />
+        </Form.Group>
+        <Container>
+          <div className="text-center">
+            <Button className="m-1 px-3" variant="primary" type="submit">
+              Log in
+            </Button>
+          </div>
+        </Container>
+      </Form>
+    </Container>
   );
 
 }

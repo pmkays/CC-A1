@@ -1,5 +1,5 @@
 import AuthContext from '../context/AuthContext'
-
+import NavBar from './NavBar'
 
 
 const axios = require('axios').default;
