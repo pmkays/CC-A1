@@ -10,6 +10,8 @@ import Message from './components/Message'
 import SellerHome from './components/SellerHome'
 import LandingPage from './components/LandingPage'
 import NavBar from './components/NavBar'
+import ItemForm from './components/Items/ItemForm'
+import Test from './components/Test'
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
@@ -36,15 +38,6 @@ function App() {
     // console.log(user)
   }
 
-
-  // const displayUser = () => {
-  //   return(
-  //     <AuthContext.Provider value={user}>
-  //       <Test/>
-  //     </AuthContext.Provider>
-  //   );
-  // }
-
   return(
     <div>
       <AuthContext.Provider value={user}>
@@ -55,19 +48,12 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="home" element={<SellerHome />} />
           <Route path="result" element={<Message />} />
+          <Route path="items" element={<ItemForm user={user}/>} />
         </Routes>
-    </AuthContext.Provider>
-
+      </AuthContext.Provider>
     </div>
 
   );
-
-  // return (
-  //   <div>
-  //     {isLoggedIn? <button onClick={handleLogout}>Log Out</button>:<Login onLogin={handleLogin}/>}
-  //     {user!=null ? displayUser() : ''}
-  //   </div>
-  // );
 }
 
 export default App;

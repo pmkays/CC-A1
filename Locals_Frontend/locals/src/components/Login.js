@@ -29,7 +29,9 @@ const Login  = (props) => {
   
     const mockUser = {
       email: "a@a.com",
-      password: "abc123"
+      password: "abc123",
+      userid: 1,
+      usertype: "seller"
     }
   
     if(response){

@@ -8,7 +8,7 @@ const Message = () => {
   console.log(link);
 
   return(
-    <h1>{msg} <Link to={`/${link}`}>here</Link></h1>
+    <h1>{msg} <Link to={`/${link}`}>{link}</Link></h1>
   )
 }
 
