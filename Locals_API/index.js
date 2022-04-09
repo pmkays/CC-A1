@@ -177,7 +177,7 @@ app.post('/items/search', (req, res) => {
   var searchItem = `'%${searchString}%'` //transform to e.g. '%mug%'for SQL like statememt
 
   var query = `
-                select itemid, itemname, price, itemdescription, quantity, suburb, postcode
+                select itemid, itemname, price, itemdescription, suburb, postcode
                 from items, users
                 where users.userid = items.sellerid
                 and suburb in ${selectedSuburbs}

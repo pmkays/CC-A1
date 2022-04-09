@@ -9,7 +9,7 @@ const mockSignIn = (email, password) => {
 
   const mockUser = {
     email: "a@a.com",
-    password: "abc123"
+    password: "abc123",
   }
 
   return (email === mockUser.email && password === mockUser.password) ? true : false;
@@ -31,7 +31,9 @@ const Login  = (props) => {
       email: "a@a.com",
       password: "abc123",
       userid: 1,
-      usertype: "seller"
+      usertype: "seller",
+      postcode: "3037",
+      name: "Paula Kurniawan"
     }
   
     if(response){
