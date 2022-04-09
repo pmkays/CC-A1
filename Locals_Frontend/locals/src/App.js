@@ -14,6 +14,7 @@ import ItemForm from './components/Items/ItemForm'
 import Test from './components/Test'
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import Items from './components/Items/Items';
 
 
 function App() {
@@ -48,7 +49,11 @@ function App() {
           <Route path="register" element={<Register />} />
           <Route path="home" element={<SellerHome />} />
           <Route path="result" element={<Message />} />
-          <Route path="items" element={<ItemForm user={user}/>} />
+          <Route path="items" element={<Items/>} />
+          <Route path="items/create" element={<ItemForm user={user}/>} />
+          {/* <Route path ="items" element ={<Items/>}>
+            <Route path="create" element={<ItemForm user={user}/>} />
+          </Route> */}
         </Routes>
       </AuthContext.Provider>
     </div>

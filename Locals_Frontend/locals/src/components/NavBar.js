@@ -11,9 +11,9 @@ const NavBar = (props) => {
     let navLinks = []; 
 
     if(user){
-      navLinks.push(<Nav.Link href="/" key={0}>Logout</Nav.Link>);
       if(user.usertype === "seller"){
         navLinks.push(<Nav.Link as={Link} to="/items" key={1}>Items</Nav.Link>);
+        navLinks.push(<Nav.Link as={Link} to="/items/create" key={2}>Create Item</Nav.Link>);
       }
     }
     console.log(navLinks)
@@ -21,15 +21,24 @@ const NavBar = (props) => {
 
   }
 
+  let rightNavLink = (user) => {
+    return user ? <Nav.Link href="/">Logout</Nav.Link> : <Nav.Link href="/login">Login</Nav.Link>
+  }
+
   return(
     <AuthContext.Consumer>{
       user => (
         <Navbar bg="primary" variant="dark">
           <Container>
-          <Navbar.Brand href="/">Locals</Navbar.Brand>
-          <Nav className="me-auto">
-            {showNavItems(user).map(x => x)}
-          </Nav>
+            <Navbar.Brand href="/">Locals</Navbar.Brand>
+            <Nav className="me-auto">
+              {showNavItems(user).map(x => x)}
+            </Nav>
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text>
+                {rightNavLink(user)}
+              </Navbar.Text>
+            </Navbar.Collapse>
           </Container>
         </Navbar>
       )
