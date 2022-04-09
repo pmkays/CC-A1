@@ -6,6 +6,9 @@ import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import {useState} from 'react'
 import {useLocation, Link} from 'react-router-dom';
+import Button from 'react-bootstrap/Button'
+import {useNavigate} from 'react-router-dom';
+
 
 
 const SearchItems = () => {
@@ -13,47 +16,23 @@ const SearchItems = () => {
   console.log(state)
   const {items, query, suburbs} = state;
   console.log(suburbs);
-  // console.log(link);
+  let navigate = useNavigate();
 
-  // let items = [
-  //   {itemid: 1,itemname: "Harry potter mug", price: 10, itemdescription: "A mug that has hogwarts on it", sellerid: 1, issold: true},
-  //   {itemid: 2,itemname: "Marvel superhero mug", price: 15, itemdescription: "A mug that has iron man on it", sellerid: 1, issold: true},
-  //   {itemid: 3, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: true},
-  //   {itemid: 4, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: false},
-  //   {itemid: 5, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: false}
-  // ]
+  const handleBuy = (event) => {
+    console.log(event.target.value);
+    //make order here. 
+    let response = true;
+    if(response){
+      console.log(response)
+      navigate('/result',{
+        state:{
+          msg:`You order has been successful! View`, 
+          link:'orders'
+        }
+      });
+    }
 
-  // let itemsForSale = items.filter(x=> x.issold);
-  // let itemsSold = items.filter(x=> !x.issold);
-
-  // const [filterItems, setFilteredItems] = useState(itemsForSale); 
-  // const [title, setTitle] = useState("On the market"); 
-
-  // const handleFilter = (event) => {
-  //   console.log(event)
-  //   switch(parseInt(event)){
-  //     case 0: 
-  //       handleOnTheMarket();
-  //       break;
-  //     case 1:
-  //       handleSold();
-  //       break;
-  //     default:
-  //       console.log("Dropdown not valid")
-  //   }
-  // }
-
-  // const handleOnTheMarket = () => {
-  //   setFilteredItems(itemsForSale);
-  //   setTitle("On the market");
-
-  // }
-
-  // const handleSold = () => {
-  //   setFilteredItems(itemsSold);
-  //   setTitle("Sold");
-
-  // }
+  }
 
   return(
     <div>
@@ -66,9 +45,18 @@ const SearchItems = () => {
         <ListGroup variant="flush">
           {items.map(x => 
             <ListGroup.Item key={x.itemid}>
-              <h4>{x.itemname}</h4>
-              <p>${x.price}</p>
-              <p>{x.itemdescription}</p>
+              <Row>
+                <Col>
+                <h4 style={{display:'inline'}}>{x.itemname}</h4> &emsp;
+                <span>${x.price}</span> <br/>
+                <span>{x.itemdescription}</span>
+                </Col>
+                <Col xs={3} className="my-auto">
+                  <div className="text-center">
+                    <Button onClick={handleBuy} value={x.itemid}>Buy</Button>
+                  </div>
+                </Col>
+              </Row>
             </ListGroup.Item>
           )}
         </ListGroup>

@@ -33,11 +33,11 @@ const Search = () => {
     navigate(`/search/items`,{
       state:{
         items:[
-          {itemid: 1,itemname: "Harry potter mug", price: 10, itemdescription: "A mug that has hogwarts on it", sellerid: 1, issold: true},
+          {itemid: 1,itemname: "Harry potter mug", price: 10, itemdescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", sellerid: 1, issold: true},
           {itemid: 2,itemname: "Marvel superhero mug", price: 15, itemdescription: "A mug that has iron man on it", sellerid: 1, issold: true},
           {itemid: 3, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: true},
-          {itemid: 4, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: false},
-          {itemid: 5, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: false}
+          {itemid: 4, itemname: "Game of thrones mug", price: 20, itemdescription: "A mug that has jon snow on it", sellerid: 1, issold: false},
+          {itemid: 5, itemname: "Demon slayer mug", price: 20, itemdescription: "A mug that has tanjiro on it", sellerid: 1, issold: false}
         ],
         query: searchString,
         suburbs: selectedSuburbs

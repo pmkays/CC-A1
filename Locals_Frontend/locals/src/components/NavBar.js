@@ -15,6 +15,7 @@ const NavBar = (props) => {
         navLinks.push(<Nav.Link as={Link} to="/items" key={1}>Items</Nav.Link>);
         navLinks.push(<Nav.Link as={Link} to="/items/create" key={2}>Create Item</Nav.Link>);
         navLinks.push(<Nav.Link as={Link} to="/search" key={3}>Search</Nav.Link>);
+        navLinks.push(<Nav.Link as={Link} to="/orders" key={1}>Orders</Nav.Link>);
       } else {
         navLinks.push(<Nav.Link as={Link} to="/orders" key={1}>Orders</Nav.Link>);
       }
