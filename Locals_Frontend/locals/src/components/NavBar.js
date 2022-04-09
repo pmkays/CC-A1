@@ -14,6 +14,8 @@ const NavBar = (props) => {
       if(user.usertype === "seller"){
         navLinks.push(<Nav.Link as={Link} to="/items" key={1}>Items</Nav.Link>);
         navLinks.push(<Nav.Link as={Link} to="/items/create" key={2}>Create Item</Nav.Link>);
+      } else {
+        navLinks.push(<Nav.Link as={Link} to="/orders" key={2}>Orders</Nav.Link>);
       }
     }
     console.log(navLinks)

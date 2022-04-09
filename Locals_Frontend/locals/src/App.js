@@ -11,11 +11,11 @@ import SellerHome from './components/SellerHome'
 import LandingPage from './components/LandingPage'
 import NavBar from './components/NavBar'
 import ItemForm from './components/Items/ItemForm'
-import Test from './components/Test'
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Items from './components/Items/Items';
 import Orders from './components/Orders'
+import Search from './components/Search'
 
 
 function App() {
@@ -53,9 +53,7 @@ function App() {
           <Route path="items" element={<Items/>} />
           <Route path="items/create" element={<ItemForm user={user}/>} />
           <Route path="orders" element={<Orders/>} />
-          {/* <Route path ="items" element ={<Items/>}>
-            <Route path="create" element={<ItemForm user={user}/>} />
-          </Route> */}
+          <Route path="search" element={<Search/>} />
         </Routes>
       </AuthContext.Provider>
     </div>
