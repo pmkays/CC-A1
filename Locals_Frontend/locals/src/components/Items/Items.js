@@ -56,7 +56,7 @@ const Items = () => {
             <h1 className='m-3'>{title}</h1>
           </Col>
           <Col>
-          <DropdownButton
+            <DropdownButton
               size="sm"
               variant="secondary"
               title="Filter..."
@@ -69,7 +69,6 @@ const Items = () => {
             </DropdownButton>
           </Col>
         </Row>
-
             <ListGroup variant="flush">
               {filterItems.map(x => 
                 <ListGroup.Item key={x.itemid}>

@@ -16,6 +16,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Items from './components/Items/Items';
 import Orders from './components/Orders'
 import Search from './components/Search'
+import SearchItems from './components/Items/SearchItems';
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
           <Route path="items/create" element={<ItemForm user={user}/>} />
           <Route path="orders" element={<Orders/>} />
           <Route path="search" element={<Search/>} />
+          <Route path="search/items" element={<SearchItems/>} />
         </Routes>
       </AuthContext.Provider>
     </div>

@@ -6,17 +6,21 @@ import Form from 'react-bootstrap/Form'
 
 import AuthContext from '../context/AuthContext'
 import {useState, useContext, useEffect} from 'react'
+import {useNavigate} from 'react-router-dom';
+
 
 const axios = require('axios').default;
 
 const Search = () => {
 
+  let navigate = useNavigate();
   const user = useContext(AuthContext);
 
   const [suburbs, setSuburbs] = useState(null)
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    let searchString = event.target.searchString.value
     console.log(event.target.searchString.value);
     let selectedSuburbs = suburbs.filter(x=> x.checked).map(x=> x.suburb);
     console.log(selectedSuburbs);
@@ -25,6 +29,20 @@ const Search = () => {
     //   searchString: event.target.searchString.value,
     //   suburbs: suburbs
     // })
+
+    navigate(`/search/items`,{
+      state:{
+        items:[
+          {itemid: 1,itemname: "Harry potter mug", price: 10, itemdescription: "A mug that has hogwarts on it", sellerid: 1, issold: true},
+          {itemid: 2,itemname: "Marvel superhero mug", price: 15, itemdescription: "A mug that has iron man on it", sellerid: 1, issold: true},
+          {itemid: 3, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: true},
+          {itemid: 4, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: false},
+          {itemid: 5, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: false}
+        ],
+        query: searchString,
+        suburbs: selectedSuburbs
+      }
+    });
 
   }
 
