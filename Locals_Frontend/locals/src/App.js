@@ -15,6 +15,7 @@ import Test from './components/Test'
 
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Items from './components/Items/Items';
+import Orders from './components/Orders'
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="result" element={<Message />} />
           <Route path="items" element={<Items/>} />
           <Route path="items/create" element={<ItemForm user={user}/>} />
+          <Route path="orders" element={<Orders/>} />
           {/* <Route path ="items" element ={<Items/>}>
             <Route path="create" element={<ItemForm user={user}/>} />
           </Route> */}

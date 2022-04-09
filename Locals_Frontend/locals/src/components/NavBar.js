@@ -22,7 +22,7 @@ const NavBar = (props) => {
   }
 
   let rightNavLink = (user) => {
-    return user ? <Nav.Link href="/">Logout</Nav.Link> : <Nav.Link href="/login">Login</Nav.Link>
+    return user ? <Nav.Link href="/" className="p-0">Logout</Nav.Link> : <Nav.Link href="/login" className="p-0">Login</Nav.Link>
   }
 
   return(
