@@ -8,6 +8,8 @@ import AuthContext from '../context/AuthContext'
 import {useState, useContext, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom';
 
+import config from '../config.json'
+
 
 const axios = require('axios').default;
 
@@ -18,27 +20,22 @@ const Search = () => {
 
   const [suburbs, setSuburbs] = useState(null)
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let searchString = event.target.searchString.value
     console.log(event.target.searchString.value);
     let selectedSuburbs = suburbs.filter(x=> x.checked).map(x=> x.suburb);
     console.log(selectedSuburbs);
-
-    // axios.post("url", {
-    //   searchString: event.target.searchString.value,
-    //   suburbs: suburbs
-    // })
+    let url = `${config["LOCALS_API"]}/items/search`
+    let response = await axios.post(url, {
+      searchString: event.target.searchString.value,
+      suburbs: selectedSuburbs
+    })
+    console.log(response);
 
     navigate(`/search/items`,{
       state:{
-        items:[
-          {itemid: 1,itemname: "Harry potter mug", price: 10, itemdescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", sellerid: 1, issold: true},
-          {itemid: 2,itemname: "Marvel superhero mug", price: 15, itemdescription: "A mug that has iron man on it", sellerid: 1, issold: true},
-          {itemid: 3, itemname: "Avatar the last airbender mug", price: 20, itemdescription: "A mug that has aang on it", sellerid: 1, issold: true},
-          {itemid: 4, itemname: "Game of thrones mug", price: 20, itemdescription: "A mug that has jon snow on it", sellerid: 1, issold: false},
-          {itemid: 5, itemname: "Demon slayer mug", price: 20, itemdescription: "A mug that has tanjiro on it", sellerid: 1, issold: false}
-        ],
+        items:response.data,
         query: searchString,
         suburbs: selectedSuburbs
       }
@@ -77,7 +74,7 @@ const Search = () => {
       user => (
         <Container style={{width:'70%', paddingTop: '25vh'}}>
           <div className="text-center">
-            <h3>Welcome {user.name.split(' ')[0]}, what would you like to buy today? </h3>
+            <h3>Welcome {user.firstname}, what would you like to buy today? </h3>
           </div><br/>
           <Container style={{width:'80%'}} className="text-center">
             <Form onSubmit={handleSubmit}>

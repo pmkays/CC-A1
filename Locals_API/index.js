@@ -1,5 +1,6 @@
 const mysql = require('mysql');
-const express = require('express')
+const express = require('express');
+var cors = require('cors');
 const app = express()
 const port = 3004
 
@@ -8,8 +9,10 @@ const { query } = require('express');
 
 
 app.use(express.json());
+app.use(cors());
 
 const axios = require('axios').default;
+var pkpostURL = "http://localhost:3005"
 
 // const AWS = require('aws-sdk');
 // var credentials = new AWS.SharedIniFileCredentials();
@@ -83,18 +86,18 @@ app.patch('/users/:userid/credit', (req, res) => {
 })
 
 app.post('/users/', (req, res) => {
-  var query = `insert into users (firstname, lastname, address, suburb, postcode, email, phonenumber, credits, usertype, userpassword)
+  var query = `insert into users (firstname, lastname, phonenumber, address, suburb, postcode, email, credits, usertype, password)
               values (
                 '${req.body.firstname}',
                 '${req.body.lastname}', 
+                '${req.body.phonenumber}',
                 '${req.body.address}', 
                 '${req.body.suburb}',
                 '${req.body.postcode}',
                 '${req.body.email}', 
-                '${req.body.phonenumber}', 
                 ${req.body.credits}, 
                 '${req.body.usertype}',
-                '${req.body.userpassword}'
+                '${req.body.password}'
               )`
 
   console.log(query);
@@ -104,7 +107,7 @@ app.post('/users/', (req, res) => {
       res.status(500).send(error);
     }
     console.log(results);
-    res.send(results.insertId);
+    res.send(results.insertId.toString());
   })
 })
 
@@ -115,10 +118,7 @@ app.post('/login', (req, res) => {
       console.error(error.stack);
       res.status(500).send(error);
     }
-    // console.log(results)
-    console.log(results[0].userpassword)
-    console.log(req.body.password)
-    results[0].userpassword === req.body.password ? res.send(true) : res.status(401).send(false);
+    results[0]?.password === req.body.password ? res.send(results[0]) : res.status(401).send(false);
   })
 })
 
@@ -171,6 +171,7 @@ app.post('/items', (req, res) => {
 
 
 app.post('/items/search', (req, res) => {
+  console.log(req.body.suburbs)
   var suburbs = req.body.suburbs.map(suburb => `'${suburb}'`); //need 'suburb' for SQL query
   var searchString = req.body.searchString;
   var selectedSuburbs = `(${suburbs.join(",")})` //flatten to: ('suburb1','suburb2','suburb3')
@@ -233,16 +234,28 @@ app.get('/orders/seller/:sellerid', (req, res) => {
   })
 })
 
-app.get('/orders/buyer/:buyerid', (req, res) => {
-  var query = `Select * from orders where buyerid = ${req.params.buyerid}`
-  conn.query(query, (error, results, fields) => {
-    if(error){
-      console.error(error.stack);
-      res.status(500).send(error);
+app.get('/orders/buyer/:buyerid', async (req, res) => {
+  var getOrders = `Select * from orders, items where orders.itemid=items.itemid and buyerid = ${req.params.buyerid}`
+  const query = util.promisify(conn.query).bind(conn);
+  try{
+    const orders = await query(getOrders);
+    let ordersWithDeliveries =[];
+    for(order of orders){
+      let response = await axios.get(`${pkpostURL}/deliveries/${order.orderid}`);
+      orderDetails = {
+        ...order,
+        lastupdated: response.data.Item.lastupdated, 
+        deliveryfee: response.data.Item.deliveryfee,
+        status: response.data.Item.status
+      }
+      ordersWithDeliveries.push(orderDetails);
+      res.send(ordersWithDeliveries);
     }
-    console.log(results);
-    res.send(results);
-  })
+
+  } catch(e){
+    console.error(e);
+    res.status(500).send(error);
+  }
 })
 
 //INSERT ORDER
@@ -278,7 +291,7 @@ app.post('/orders/', (req, res) => {
       if(error){
         res.status(500).send(error);
       }
-      var url = 'http://ec2-54-205-217-94.compute-1.amazonaws.com:3005/deliveries';
+      var url = `${pkpostURL}/deliveries`;
       var dynamodelivery = {
         "PK": orderid.toString(),
         "SK" : orderid.toString(),
@@ -297,7 +310,7 @@ app.post('/orders/', (req, res) => {
 
 
 updateDeliveryStatus = async (orderid) => {
-  var url = 'http://ec2-54-205-217-94.compute-1.amazonaws.com:3005/deliveries/status';
+  var url = `${pkpostURL}/deliveries/status`;
   var dynamodelivery = {
     "PK": orderid.toString(),
     "SK" : orderid.toString(),
@@ -332,7 +345,7 @@ formatReturnData = (data, orderDelivered, orderid) => {
 }
 
 app.get('/timedfunction', async (req, res) => {
-  var url = 'http://ec2-54-205-217-94.compute-1.amazonaws.com:3005/deliveries/status';
+  var url = `${pkpostURL}/deliveries/status`;
   var getPendingOrders = `Select * from orders where orderstatus = 'Pending'`;
 
   try{

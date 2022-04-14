@@ -5,14 +5,14 @@ import Login from './components/Login';
 // import Test from './components/Message'
 import AuthContext from './context/AuthContext';
 import {useNavigate} from 'react-router-dom';
-import Register from './components/Register'
+import Register from './components/Register/Register'
 import Message from './components/Message'
 import SellerHome from './components/SellerHome'
 import LandingPage from './components/LandingPage'
 import NavBar from './components/NavBar'
 import ItemForm from './components/Items/ItemForm'
 
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import Items from './components/Items/Items';
 import Orders from './components/Orders'
 import Search from './components/Search'

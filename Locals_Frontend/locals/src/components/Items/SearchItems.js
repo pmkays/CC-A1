@@ -2,10 +2,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import DropdownButton from 'react-bootstrap/DropdownButton'
-import Dropdown from 'react-bootstrap/Dropdown'
-import {useState} from 'react'
-import {useLocation, Link} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import Button from 'react-bootstrap/Button'
 import {useNavigate} from 'react-router-dom';
 
@@ -49,7 +46,8 @@ const SearchItems = () => {
                 <Col>
                 <h4 style={{display:'inline'}}>{x.itemname}</h4> &emsp;
                 <span>${x.price}</span> <br/>
-                <span>{x.itemdescription}</span>
+                <span>{x.itemdescription}</span><br/>
+                <span>Location: {x.suburb}</span>
                 </Col>
                 <Col xs={3} className="my-auto">
                   <div className="text-center">

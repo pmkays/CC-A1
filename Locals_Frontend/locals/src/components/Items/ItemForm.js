@@ -1,18 +1,11 @@
-import { useState } from 'react';
-import {useNavigate, Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
-
+import config from '../../config.json'
 import AuthContext from '../../context/AuthContext';
 
 const axios = require('axios').default;
-
-
-const mockAddItem = (userDetails) => {
-  return userDetails ? true : false;
-}
-
 
 const ItemForm  = () => {
   let navigate = useNavigate();
@@ -29,15 +22,17 @@ const ItemForm  = () => {
     }
 
     console.log(itemDetails);
-    let response = await mockAddItem(itemDetails);
+    let url = `${config["LOCALS_API"]}/items`
+    let response = await axios.post(url, itemDetails);
+    console.log(response.data);
     if(response){
       console.log(response)
-      // navigate('/result',{
-      //   state:{
-      //     msg:`You have successfully added an item. Please log in`, 
-      //     link:'login'
-      //   }
-      // });
+      navigate('/result',{
+        state:{
+          msg:`You have successfully added an item. View your `, 
+          link:'items'
+        }
+      });
     }
   
     // let response = await axios.post({

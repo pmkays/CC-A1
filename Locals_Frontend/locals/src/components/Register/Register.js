@@ -1,48 +1,56 @@
 import { useState } from 'react';
-import {useNavigate, Link} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
+import AddressInput from '../Register/AddressInput'
+import config from '../../config.json'
 
 const axios = require('axios').default;
 
-
-const mockRegister = (userDetails) => {
-  return userDetails ? true : false;
-}
-
-
 const Register  = (props) => {
+  const [addressDetails, setAddressDetails] = useState();
+
   let navigate = useNavigate();
+
+  const addressHandler = (address, suburb, postcode) => {
+    const stateObj = {
+      address: address, 
+      suburb: suburb, 
+      postcode: postcode
+    }
+    setAddressDetails(stateObj);
+  }
 
   const submitHandler = async (e) => {
     e.preventDefault(); 
     let form = e.target;
 
     let userDetails = {
-      name: form.name.value,
+      firstname: form.firstname.value,
+      lastname: form.lastname.value,
+      phonenumber: form.phonenumber.value,
       email: form.email.value,
-      address: form.address.value,
-      accounttype: form.accounttype.value,
+      address: addressDetails.address,
+      postcode: addressDetails.postcode,
+      suburb: addressDetails.suburb,
+      usertype: form.usertype.value,
       credits: form.credits.value,
       password: form.password.value,
     }
 
     console.log(userDetails);
-    let response = await mockRegister(userDetails);
+    let url = `${config["LOCALS_API"]}/users`
+    let response = await axios.post(url, userDetails);
     if(response){
       console.log(response)
       navigate('/result',{
         state:{
-          msg:`You have successfully signed up for an account. Please log in`, 
+          msg:`You have successfully signed up for an account. Please`, 
           link:'login'
         }
       });
     }
-  
-    // let response = await axios.post({
-    //   userDetails
-    // });
   
   }
 
@@ -51,9 +59,17 @@ const Register  = (props) => {
       <Container style={{width:'45%'}}>
         <h1 className="pt-5 text-center" >Get started with Locals today!</h1>
         <Form onSubmit={submitHandler}>
-          <Form.Group className="m-3 px-5 pt-5" controlId="formBasicName">
-            <Form.Label>Full name</Form.Label>
-            <Form.Control type="text" placeholder="Enter full name" name="name"/>
+          <Form.Group className="m-3 px-5 pt-5" controlId="formBasicFirstName">
+            <Form.Label>First name</Form.Label>
+            <Form.Control type="text" placeholder="Enter first name" name="firstname"/>
+          </Form.Group>
+          <Form.Group className="m-3 px-5" controlId="formBasicLastName">
+            <Form.Label>Last name</Form.Label>
+            <Form.Control type="text" placeholder="Enter last name" name="lastname"/>
+          </Form.Group>
+          <Form.Group className="m-3 px-5" controlId="formBasicPhoneNumber">
+            <Form.Label>Phone number</Form.Label>
+            <Form.Control type="text" placeholder="Enter phone number" name="phonenumber"/>
           </Form.Group>
           <Form.Group className="m-3 px-5" controlId="formBasicEmail">
             <Form.Label>Email</Form.Label>
@@ -61,11 +77,11 @@ const Register  = (props) => {
           </Form.Group>
           <Form.Group className="m-3 px-5" controlId="formBasicAddress">
             <Form.Label>Address</Form.Label>
-            <Form.Control type="text" placeholder="Enter address" name="address"/>
+            <AddressInput className="form-control" handleAddress={addressHandler}/>
           </Form.Group>
           <Form.Group className="m-3 px-5" controlId="formBasicAccountType">
-            <Form.Label>Account type</Form.Label>
-            <Form.Select aria-label="account type" name="accounttype">
+            <Form.Label>User type</Form.Label>
+            <Form.Select aria-label="user type" name="usertype">
               <option value="seller">Seller</option>
               <option value="buyer">Buyer</option>
             </Form.Select>
