@@ -82,7 +82,7 @@ const Items = () => {
               {filterItems.map(x => 
                 <ListGroup.Item key={x.itemid}>
                   <h4>{x.itemname}</h4>
-                  <p>{x.price}</p>
+                  <p>${x.price.toFixed(2)}</p>
                   <p>{x.itemdescription}</p>
                 </ListGroup.Item>
               )}

@@ -96,8 +96,9 @@ const Orders = () => {
                   <h4>{x.itemname}</h4>
                   <p>Ordered on: {x.orderdate}</p>
                   <p>Order Status: {x.orderstatus}</p>
-                  <p>Item price: ${x.price}</p>
-                  <p>Total: ${x.total} (incl. delivery)</p>
+                  <p>Item price: ${x.price.toFixed(2)}</p>
+                  <p>Delivery fee: ${x.deliveryfee.toFixed(2)}</p>
+                  <p>Total: ${x.total.toFixed(2)} (incl. delivery)</p>
                   <p>Delivery Status: {x.status}, last updated on {x.lastupdated}</p>
                   <p></p>
                 </ListGroup.Item>

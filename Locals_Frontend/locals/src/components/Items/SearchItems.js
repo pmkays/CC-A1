@@ -45,7 +45,7 @@ const SearchItems = () => {
               <Row>
                 <Col>
                 <h4 style={{display:'inline'}}>{x.itemname}</h4> &emsp;
-                <span>${x.price}</span> <br/>
+                <span>${x.price.toFixed(2)}</span><br/>
                 <span>{x.itemdescription}</span><br/>
                 <span>Location: {x.suburb}</span>
                 </Col>
