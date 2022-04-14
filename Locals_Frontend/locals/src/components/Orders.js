@@ -4,24 +4,26 @@ import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useContext} from 'react'
 import config from '../config.json'
+import AuthContext from '../context/AuthContext'
 
 const axios = require('axios').default;
 
 
 const Orders = () => {
 
-  // const user = useContext(AuthContext);
+  const user = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [filterOrders, setFilteredOrders] = useState([]); 
   const [title, setTitle] = useState("Pending Orders"); 
 
   useEffect( () => {
     const getOrders = async () => {
-      let url =`${config["LOCALS_API"]}/orders/buyer/3`;
+      let url =`${config["LOCALS_API"]}/orders/buyer/${user.userid}`;
       let response = await axios.get(url);
       let rawOrders = response.data;
+      console.log(rawOrders);
       setOrders(rawOrders);
       setFilteredOrders(rawOrders.filter(x=> x.orderstatus === "Pending"))
       console.log(orders);

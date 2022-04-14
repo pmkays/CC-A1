@@ -171,7 +171,6 @@ app.post('/items', (req, res) => {
 
 
 app.post('/items/search', (req, res) => {
-  console.log(req.body.suburbs)
   var suburbs = req.body.suburbs.map(suburb => `'${suburb}'`); //need 'suburb' for SQL query
   var searchString = req.body.searchString;
   var selectedSuburbs = `(${suburbs.join(",")})` //flatten to: ('suburb1','suburb2','suburb3')
@@ -249,8 +248,8 @@ app.get('/orders/buyer/:buyerid', async (req, res) => {
         status: response.data.Item.status
       }
       ordersWithDeliveries.push(orderDetails);
-      res.send(ordersWithDeliveries);
     }
+    res.send(ordersWithDeliveries);
 
   } catch(e){
     console.error(e);
