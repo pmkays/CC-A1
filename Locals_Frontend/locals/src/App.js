@@ -28,17 +28,18 @@ function App() {
   const handleLogin = (user) => {
     setUser(user)
     setLoggedIn(true);
-    navigate("/home");
+    if(user.usertype === "seller"){
+      navigate("/home")
+    } else { 
+      navigate("/search")
+    }
     
-    // console.log(user)
   }
 
   const handleLogout = () => {
     setUser(null)
     setLoggedIn(false);
     navigate("/");
-
-    // console.log(user)
   }
 
   return(
