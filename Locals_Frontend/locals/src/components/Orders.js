@@ -10,6 +10,28 @@ import AuthContext from '../context/AuthContext'
 
 const axios = require('axios').default;
 
+const getFormattedDate = (dateString) => {
+  const months = {
+    Jan: '01',
+    Feb: '02',
+    Mar: '03',
+    Apr: '04',
+    May: '05',
+    Jun: '06',
+    Jul: '07',
+    Aug: '08',
+    Sep: '09',
+    Oct: '10',
+    Nov: '11',
+    Dec: '12',
+  }
+
+  let values = dateString.split(" "); 
+  let day = values[2];
+  let year = values[3];
+  let month = months[values[1]];
+  return `${day}/${month}/${year}`;
+}
 
 const Orders = () => {
 
@@ -33,16 +55,7 @@ const Orders = () => {
   }, []);
   
 
-  // const pendingOrdersDefault = () => {
-  //   // console.log("handling pending")
-  //   let ordersPending = orders.filter(x=> x.orderstatus === "Pending");
-  //   // console.log("orders pending")
-  //   let ordersPendingComplete = getCompleteOrders(ordersPending);
-  //   return ordersPendingComplete
-  // }
-
   const handleFilter = (event) => {
-    // console.log(event)
     switch(parseInt(event)){
       case 0: 
         handlePending();
@@ -99,7 +112,7 @@ const Orders = () => {
                   <p>Item price: ${x.price.toFixed(2)}</p>
                   <p>Delivery fee: ${x.deliveryfee.toFixed(2)}</p>
                   <p>Total: ${x.total.toFixed(2)} (incl. delivery)</p>
-                  <p>Delivery Status: {x.status}, last updated on {x.lastupdated}</p>
+                  <p>Delivery Status: {x.status}, last updated on {getFormattedDate(x.lastupdated)}</p>
                   <p></p>
                 </ListGroup.Item>
               )}

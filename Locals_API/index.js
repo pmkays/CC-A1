@@ -12,7 +12,8 @@ app.use(express.json());
 app.use(cors());
 
 const axios = require('axios').default;
-var pkpostURL = "http://localhost:3005"
+// var pkpostURL = "http://localhost:3005"
+var pkpostURL="http://ec2-54-175-113-168.compute-1.amazonaws.com:3005"
 
 // const AWS = require('aws-sdk');
 // var credentials = new AWS.SharedIniFileCredentials();
@@ -182,6 +183,7 @@ app.post('/items/search', (req, res) => {
                 where users.userid = items.sellerid
                 and suburb in ${selectedSuburbs}
                 and itemname like ${searchItem}
+                and !issold
               `
   console.log(query);
   conn.query(query, (error, results, fields) => {
@@ -240,7 +242,9 @@ app.get('/orders/buyer/:buyerid', async (req, res) => {
     const orders = await query(getOrders);
     let ordersWithDeliveries =[];
     for(order of orders){
+      console.log(`${pkpostURL}/deliveries/${order.orderid}`);
       let response = await axios.get(`${pkpostURL}/deliveries/${order.orderid}`);
+      console.log(response.data)
       orderDetails = {
         ...order,
         lastupdated: response.data.Item.lastupdated, 
