@@ -37,7 +37,7 @@ const Search = () => {
       state:{
         items:response.data,
         query: searchString,
-        suburbs: selectedSuburbs
+        suburbs: selectedSuburbs,
       }
     });
 
