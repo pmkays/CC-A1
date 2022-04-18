@@ -1,9 +1,12 @@
 const express = require('express')
 const app = express()
 const port = 3005
+var cors = require('cors');
 
 const AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
+const s3 = new AWS.S3(); // Pass in opts to S3 if necessary
+
 
 
 // getConfig = async () => {
@@ -20,7 +23,7 @@ AWS.config.update({region: 'us-east-1'});
 
 const client = new AWS.DynamoDB.DocumentClient();
 app.use(express.json());
-
+app.use(cors());
 
 app.get('/deliveries', (req, res) => {
   var params = {
@@ -137,6 +140,38 @@ app.post('/deliveries', (req, res) => {
         res.send(params.Item);
     }
   })    
+});
+
+app.get('/seed', async (req, res) => {
+  console.log("in reset method");
+  var params = {
+    Bucket: 'cc-pkpost', // your bucket name,
+    Key: 'deliveries.json' // path to the object you're looking for
+  }
+
+  const data = await s3.getObject(params).promise();
+
+  let deliveryData = JSON.parse(data.Body.toString('utf-8'));
+  let deliveries = deliveryData.data; 
+  console.log(deliveries);
+
+  var dynamoparams = {
+    RequestItems: {
+      "Cloud-Computing": deliveries
+    }
+  };
+
+  var dynamoBase = new AWS.DynamoDB();
+  dynamoBase.batchWriteItem(dynamoparams, function(err, data) {
+    if (err) {
+      console.log(err);
+      res.status(500).send(err);
+    } else {
+      console.log(data);
+      res.send(data);
+    }
+  });
+  
 });
 
 app.listen(port, () => {

@@ -25,6 +25,8 @@ const AddressInput = (props) => {
     let postcode = value.properties.postcode;
     props.handleAddress(address, suburb, postcode);
   }
+  
+  //same as using this: var url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(currentValue)}&limit=5&apiKey=${apiKey}`;
 
   return <GeoapifyContext apiKey="ec72b3f43c054e9791e985a4cc10dac2">
       <GeoapifyGeocoderAutocomplete

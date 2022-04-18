@@ -1,0 +1,45 @@
+	
+# serverless.yml
+ 
+service: express-app
+ 
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: us-east-1
+  iam: 
+    role: arn:aws:iam::746043720293:role/LabRole
+ 
+functions:
+  app:
+    handler: app.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+  users:
+    handler: app.handler
+    events:
+      - http: 'ANY /users/{proxy+}'
+  items:
+    handler: app.handler
+    events:
+      - http: 'ANY /items/{proxy+}'
+  orders:
+    handler: app.handler
+    events:
+      - http: 'ANY /orders/{proxy+}'
+  timedfunction:
+    handler: app.handler
+    events:
+      - http: 'GET /timedfunction'
+
+
+plugins:
+  - serverless-offline
+
+	
+custom:
+  serverless-offline:
+    httpPort: 3004
+

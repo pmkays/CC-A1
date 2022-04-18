@@ -1,3 +1,4 @@
 {
-  "LOCALS_API": "http://localhost:3004"
+  "LOCALS_API": "https://r5eysnba65.execute-api.us-east-1.amazonaws.com/dev",
+  "LOCALS_API_OFFLINE": "http://localhost:3004"
 }

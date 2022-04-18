@@ -1,0 +1,69 @@
+{
+  "data" : [
+    { 
+      "PutRequest": {
+        "Item" : {
+          "PK": {
+            "S": "1"
+          },
+          "SK": {
+            "S": "1"
+          },
+          "lastupdated": {
+            "S": "Sat Apr 16 2022 08:19:58 GMT+0000 (Coordinated Universal Time)"
+          },
+          "status": {
+            "S": "Order Received"
+          },
+          "deliveryfee": {
+            "N": "2"
+          }
+        }
+      }
+    }
+    ,
+    {
+      "PutRequest": {
+        "Item" : {
+          "PK": {
+            "S": "2"
+          },
+          "SK": {
+            "S": "2"
+          },
+          "lastupdated": {
+            "S": "Sat Apr 16 2022 08:19:58 GMT+0000 (Coordinated Universal Time)"
+          },
+          "status": {
+            "S": "Order Received"
+          },
+          "deliveryfee": {
+            "N": "1.8"
+          }
+        }
+      }
+    }
+    ,
+    {
+      "PutRequest": {
+        "Item" : {
+          "PK": {
+            "S": "3"
+          },
+          "SK": {
+            "S": "3"
+          },
+          "lastupdated": {
+            "S": "Sat Apr 16 2022 08:19:58 GMT+0000 (Coordinated Universal Time)"
+          },
+          "status": {
+            "S": "Order Received"
+          },
+          "deliveryfee": {
+            "N": "0.5"
+          }
+        }
+      }
+    }
+  ]
+}
