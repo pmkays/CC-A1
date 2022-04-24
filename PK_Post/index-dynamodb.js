@@ -5,21 +5,7 @@ var cors = require('cors');
 
 const AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
-const s3 = new AWS.S3(); // Pass in opts to S3 if necessary
-
-
-
-// getConfig = async () => {
-//   const download = require('download');
-//   await download('https://cc-configurations.s3.amazonaws.com/config.json','./')
-//   .then(() => {
-//     AWS.config.loadFromPath('./config.json');
-//     console.log('Got the most recent config.json');
-//     console.log(AWS.config.credentials);
-//   })
-// }
-
-// getConfig();
+const s3 = new AWS.S3();
 
 const client = new AWS.DynamoDB.DocumentClient();
 app.use(express.json());
