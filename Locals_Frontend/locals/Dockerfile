@@ -18,3 +18,6 @@ COPY . ./
 EXPOSE 3000
 # start app
 CMD ["npm", "start"]
+
+#https://mherman.org/blog/dockerizing-a-react-app/
+#https://nodejs.org/en/docs/guides/nodejs-docker-webapp/

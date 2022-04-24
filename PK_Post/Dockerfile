@@ -1,6 +1,5 @@
 FROM node:14-alpine
 
-# Create app directory
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -11,3 +10,5 @@ COPY . .
 
 EXPOSE 3005
 CMD [ "node", "index-dynamodb.js" ]
+
+#https://nodejs.org/en/docs/guides/nodejs-docker-webapp/

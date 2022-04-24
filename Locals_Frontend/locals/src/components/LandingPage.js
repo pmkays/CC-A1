@@ -17,15 +17,6 @@ const LandingPage = () =>{
       </div>
     </Container>
   )
-
-
-  // return(
-  //   <Container styles={{width:'75%'}}>
-  //     <h1>Welcome to the landing page!</h1>
-  //     <Link to="/login">Login</Link><br/>
-  //     <Link to="/register">Register</Link>
-  //   </Container>
-  // );
 }
 
 export default LandingPage;

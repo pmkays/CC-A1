@@ -13,13 +13,8 @@ app.use(express.json());
 app.use(cors());
 
 const axios = require('axios').default;
-// var pkpostURL = "http://localhost:3005"
 var pkpostURL="http://ec2-54-175-113-168.compute-1.amazonaws.com:3005"
 
-// const AWS = require('aws-sdk');
-// var credentials = new AWS.SharedIniFileCredentials();
-// AWS.config.credentials = credentials;
-// const client = new AWS.DynamoDB.DocumentClient();
 
 var conn = mysql.createConnection({
 
@@ -262,10 +257,6 @@ app.get('/orders/buyer/:buyerid', async (req, res) => {
   }
 })
 
-//INSERT ORDER
-// GET ORDER ID back through result.insertId
-// change issold
-//ADD new delivery with the PK and SK = result.insertID. 
 app.post('/orders/', (req, res) => {
   
   var itemquery = `
@@ -348,6 +339,7 @@ formatReturnData = (data, orderDelivered, orderid) => {
   return formatted;
 }
 
+//[3] B. Hasergin, L. Li and A. Wilke, "node.js async/await using with MySQL", Stack Overflow, 2022. [Online]. Available: https://stackoverflow.com/questions/44004418/node-js-async-await-using-with-mysql. [Accessed: 24- Apr- 2022].
 app.get('/timedfunction', async (req, res) => {
   var url = `${pkpostURL}/deliveries/status`;
   var getPendingOrders = `Select * from orders where orderstatus = 'Pending'`;

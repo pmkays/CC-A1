@@ -57,12 +57,9 @@ const Search = () => {
 
   useEffect( () => {
     const getSuburbs = async () => {
-      // console.log(user);
       const baseUrl = "https://api.zippopotam.us/au"
       let response = await axios.get(`${baseUrl}/${user.postcode}`);
-      // console.log(response.data);
       let suburbNames = response.data.places.map(x=> ({suburb: x["place name"], checked:false}));
-      // console.log(suburbNames)
       setSuburbs(suburbNames);
     }
 

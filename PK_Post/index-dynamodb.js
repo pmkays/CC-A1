@@ -163,3 +163,7 @@ app.get('/seed', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+//[1][Online]. Available: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/dynamodb-example-table-read-write.html. Note: All code here is relevant as this was used as a general reference, no in-text/in-code citation. 
+//[2]R. Wilinski, "AWS DynamoDB DocumentClient & Node.js - Complete Cheat Sheet", Dynobase.dev, 2020. [Online]. Available: https://dynobase.dev/dynamodb-nodejs/. Note: All code here is relevant as this was used as a general reference, no in-text/in-code citation. 

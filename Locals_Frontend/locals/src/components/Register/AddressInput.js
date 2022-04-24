@@ -4,20 +4,6 @@ import '@geoapify/geocoder-autocomplete/styles/minimal.css'
 import Form from 'react-bootstrap/Form'
 
 const AddressInput = (props) => {
-  // const geoapifyAutocompleteInput= {
-  //   display: 'block',
-  //   width: '100%',
-  //   padding: '.375rem .75rem',
-  //   fontSize: '1rem',
-  //   fontWeight: '400',
-  //   lineHeight: '1.5',
-  //   color: '#212529',
-  //   backgroundColor: '#fff',
-  //   backgroundClip: 'padding-box',
-  //   border: '1px solid #ced4da',
-  //   borderRadius: '.25rem',
-  //   transition: 'border-color .15s ease-in-out,box-shadow .15s ease-in-out'
-  // }
 
   const onPlaceSelect = (value) => {
     let address = value.properties.formatted;
